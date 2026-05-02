@@ -1,19 +1,34 @@
-# Keil/MDK build output
+# Keil user files
+*.uvguix.*
+*.uvoptx
+
+# Keil build outputs
 *.o
 *.d
 *.crf
-*.htm
-*.map
-*.hex
+*.dep
 *.axf
+*.hex
+*.bin
+*.map
 *.lst
 *.lnp
+*.htm
 
-# IDE
-*.uvoptx
-*.uvguix.*
-*.uvprojx
+# Keil temporary and debug files
+*.iex
 
-# Misc
-*.exe
+# Common generated directories inside MDK output folders
+f405 _shukon/MDK-ARM/f405 _shukon/*.o
+f405 _shukon/MDK-ARM/f405 _shukon/*.d
+f405 _shukon/MDK-ARM/f405 _shukon/*.crf
+f405 _shukon/MDK-ARM/f405 _shukon/*.dep
+f405 _shukon/MDK-ARM/f405 _shukon/*.axf
+f405 _shukon/MDK-ARM/f405 _shukon/*.hex
+f405 _shukon/MDK-ARM/f405 _shukon/*.map
+f405 _shukon/MDK-ARM/f405 _shukon/*.htm
+f405 _shukon/MDK-ARM/f405 _shukon/*.lnp
+
+# OS files
 .DS_Store
+Thumbs.db
