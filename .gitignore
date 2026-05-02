@@ -1,0 +1,19 @@
+# Keil/MDK build output
+*.o
+*.d
+*.crf
+*.htm
+*.map
+*.hex
+*.axf
+*.lst
+*.lnp
+
+# IDE
+*.uvoptx
+*.uvguix.*
+*.uvprojx
+
+# Misc
+*.exe
+.DS_Store
