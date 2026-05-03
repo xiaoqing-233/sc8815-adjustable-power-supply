@@ -137,7 +137,7 @@
             <DriverSelection>4101</DriverSelection>
           </Flash1>
           <bUseTDR>1</bUseTDR>
-          <Flash2>BIN\UL2V8M.DLL</Flash2>
+          <Flash2>BIN\UL2CM3.DLL</Flash2>
           <Flash3></Flash3>
           <Flash4></Flash4>
           <pFcarmOut></pFcarmOut>
@@ -1300,6 +1300,16 @@
               <FileName>ntc_temp.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\USER_code\ntc_temp.h</FilePath>
+            </File>
+            <File>
+              <FileName>AT24C16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\USER_code\AT24C16.h</FilePath>
+            </File>
+            <File>
+              <FileName>AT24C16.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\USER_code\AT24C16.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -37,6 +37,7 @@
 #include "INA226_Driver.h"
 #include "ntc_temp.h"
 #include "soft_i2c.h"
+#include "AT24C16.h"
 
 #include "PID.h"
 #include "SC8815.h"
@@ -80,6 +81,9 @@ SoftI2C_Bus Bus_INA = {GPIOB, GPIO_PIN_10, GPIOB, GPIO_PIN_11};
 
 // 2. 定义 SC8815 总线 (PA8-SCL, PC9-SDA)
 SoftI2C_Bus Bus_SC  = {GPIOA, GPIO_PIN_8, GPIOC, GPIO_PIN_9};
+
+// 3. 定义 AT24C16 总线 (PA11-SCL, PA12-SDA)
+SoftI2C_Bus Bus_AT  = {GPIOA, GPIO_PIN_11, GPIOA, GPIO_PIN_12};
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -208,14 +212,29 @@ int main(void)
 	
   Software_I2C_Init(&Bus_INA);
   Software_I2C_Init(&Bus_SC);
+	AT24C16_Init(&Bus_AT);
 	
 	SC8815_Init_Check();
 	SC8815_Start_OTG_Mode();
 	
 	INA226_Init(&INA_outData, INA_ADDR, max_current_OUT, shunt_res_initial);
 	
-	PSU.Set_Volts = 0.5f;  // 默认设定 0.5v
-  PSU.Set_Amps  = 1.0f;  // 默认限流 0.3A
+	// 从 AT24C16 读取保存的电压电流配置
+	uint8_t magic = 0;
+	AT24C16_ReadByte(&Bus_AT, EE_ADDR_MAGIC, &magic);
+	if (magic == EE_MAGIC_VALUE)
+	{
+		uint8_t buf[4];
+		AT24C16_Read(&Bus_AT, EE_ADDR_SET_VOLTS, buf, 4);
+		memcpy(&PSU.Set_Volts, buf, 4);
+		AT24C16_Read(&Bus_AT, EE_ADDR_SET_AMPS, buf, 4);
+		memcpy(&PSU.Set_Amps, buf, 4);
+	}
+	else
+	{
+		PSU.Set_Volts = 0.5f;
+		PSU.Set_Amps  = 1.0f;
+	}
   PSU_Set_Output_State(0);
 	
 	lv_spinbox_set_value(ui_SpinboxVolt, (int32_t)(PSU.Set_Volts * 100));
